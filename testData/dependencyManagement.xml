@@ -15,7 +15,7 @@
                 <version>version</version>
             </dependency</fold>>
 
-            <dependency<fold text=' groupId:artifactId2:version2:test'>>>
+            <dependency<fold text=' groupId:artifactId2:version2 (test)'>>>
                 <groupId>groupId</groupId>
                 <artifactId>artifactId2</artifactId>
                 <version>version2</version>

@@ -191,7 +191,9 @@ public class PomFoldingBuilder extends FoldingBuilderEx {
         appendPartIfNotNull(sb, dependency.getType().getStringValue());
         appendPartIfNotNull(sb, dependency.getClassifier().getStringValue());
         appendPartIfNotNull(sb, dependency.getVersion().getStringValue());
-        appendPartIfNotNull(sb, dependency.getScope().getStringValue());
+        if (dependency.getScope().getStringValue() != null) {
+            sb.append(" (").append(dependency.getScope().getStringValue()).append(')');
+        }
         if (dependency.getExclusions().exists()) {
             sb.append(" ...");
         }
