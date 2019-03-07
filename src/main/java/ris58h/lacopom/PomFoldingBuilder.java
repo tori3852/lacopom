@@ -1,5 +1,24 @@
 package ris58h.lacopom;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.idea.maven.dom.model.MavenDomBuildBase;
+import org.jetbrains.idea.maven.dom.model.MavenDomDependencies;
+import org.jetbrains.idea.maven.dom.model.MavenDomDependency;
+import org.jetbrains.idea.maven.dom.model.MavenDomExclusion;
+import org.jetbrains.idea.maven.dom.model.MavenDomExtension;
+import org.jetbrains.idea.maven.dom.model.MavenDomParent;
+import org.jetbrains.idea.maven.dom.model.MavenDomPlugin;
+import org.jetbrains.idea.maven.dom.model.MavenDomProfile;
+import org.jetbrains.idea.maven.dom.model.MavenDomProjectModel;
+import org.jetbrains.idea.maven.dom.model.MavenDomProjectModelBase;
+import org.jetbrains.idea.maven.dom.model.MavenDomShortArtifactCoordinates;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilderEx;
 import com.intellij.lang.folding.FoldingDescriptor;
@@ -17,14 +36,6 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.xml.util.XmlTagUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.idea.maven.dom.model.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class PomFoldingBuilder extends FoldingBuilderEx {
     @NotNull
@@ -73,6 +84,16 @@ public class PomFoldingBuilder extends FoldingBuilderEx {
         };
 
         MavenDomProjectModel project = fileElement.getRootElement();
+
+        // properties
+        XmlTag propXmlTags = project.getProperties().getXmlTag();
+        if (propXmlTags != null) {
+            for (XmlTag propXmlTag : propXmlTags.getSubTags()) {
+                String placeholder = propXmlTag.getValue().getTrimmedText();
+                descriptors.add(foldingDescriptor(propXmlTag, placeholder));
+            }
+        }
+
         MavenDomParent parent = project.getMavenParent();
         addDescriptorIfPossible.accept(parent.getXmlTag(), describeParent(parent));
         processModelBase.accept(project);

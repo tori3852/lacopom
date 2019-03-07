@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<fold text='...'>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>groupId</groupId>
+    <artifactId>artifactId</artifactId>
+    <version>version</version>
+
+    <properties<fold text='...'>>
+        <java.version<fold text=' 1.8'>>1.8</java.version</fold>>
+        <junit.version<fold text=' 4.10'>>4.10</junit.version</fold>>
+        <spring.version<fold text=' 4.0.0.RELEASE'>>4.0.0.RELEASE</spring.version</fold>>
+    </properties</fold>>
+
+</project</fold>>
