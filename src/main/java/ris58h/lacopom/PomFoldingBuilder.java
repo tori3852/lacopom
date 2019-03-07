@@ -94,6 +94,15 @@ public class PomFoldingBuilder extends FoldingBuilderEx {
             }
         }
 
+        // any regular element
+        project.acceptChildren(element -> {
+            XmlTag xmlTag = element.getXmlTag();
+            if (xmlTag != null && xmlTag.getSubTags().length == 0) {
+                String placeholder = xmlTag.getValue().getTrimmedText();
+                descriptors.add(foldingDescriptor(xmlTag, placeholder));
+            }
+        });
+
         MavenDomParent parent = project.getMavenParent();
         addDescriptorIfPossible.accept(parent.getXmlTag(), describeParent(parent));
         processModelBase.accept(project);
@@ -134,7 +143,6 @@ public class PomFoldingBuilder extends FoldingBuilderEx {
                 null,
                 " " + placeholder);
     }
-
 
     private static boolean hasId(MavenDomShortArtifactCoordinates artifactCoordinates) {
         String groupId = artifactCoordinates.getGroupId().getStringValue();
